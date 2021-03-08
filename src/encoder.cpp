@@ -3,7 +3,6 @@
 volatile Encoder encoder1(ENCODER_1A, ENCODER_1B);
 volatile Encoder encoder2(ENCODER_2A, ENCODER_2B);
 
-
 void EncoderHandler1A(void) {encoder1.ProcessInterrupt(ENCODER_1A);}
 void EncoderHandler1B(void) {encoder1.ProcessInterrupt(ENCODER_1B);}
 void EncoderHandler2A(void) {encoder2.ProcessInterrupt(ENCODER_2A);}

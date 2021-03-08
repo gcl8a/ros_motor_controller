@@ -9,7 +9,7 @@
 #define __ROBOT_H
 
 #include "comm.h"
-#include "sabertooth.h"
+//#include "sabertooth.h"
 #include "mc33926.h"
 #include "controller.h"
 
@@ -27,20 +27,6 @@
 //const float ROBOT_RADIUS = 0.227;
 //const float ROBOT_RADIUS_IN_TICKS = 887; //(ROBOT_RADIUS * TICKS_PER_METER)
 
-/*
- * Holds all the kinematics, both pose and velocities
- */
-//struct Pose
-//{
-//  float x = 0; //ticks
-//  float y = 0; //ticks
-//  float cos_theta = 1; //unitless
-//  float sin_theta = 0; //unitless
-//
-//  float u = 0; //ticks / period
-//  float omega = 0; //rad / period
-//};
-
 class UGV
 {  
 protected:
@@ -49,7 +35,7 @@ protected:
   ivector motorSpeeds;
   ivector effort;
   
-  //Sabertooth driver;
+  //motor driver;
   MC33926 driver;
   MotionController controller;
 
