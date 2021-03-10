@@ -14,7 +14,7 @@
 #include "encoder.h"
 #include "comm.h"
 
-static volatile uint8_t readyToPID = 0;
+extern volatile uint8_t readyToPID;
 
 #define INTEGRAL_CAP 24000 //note that the comparison is sum > (INTEGRAL_CAP / Ki) so that changing Ki doesn't affect the cap
 #define KP_DEF 64
@@ -34,56 +34,56 @@ protected:
 public:
   MotionController(void) : target(2), estimate(2) {}
 
-  void Init(void)
-  {
-    DEBUG_SERIAL.println("MotionController::Init");
-    SetupEncoders();
+  void Init(void);
+  // {
+  //   DEBUG_SERIAL.println("MotionController::Init");
+  //   SetupEncoders();
 
-    /*
-     * Set up TC3 for periodically calling the PID routine 
-     */
-    // Feed GCLK0 (already enabled) to TCC2 and TC3
-    REG_GCLK_CLKCTRL = GCLK_CLKCTRL_CLKEN |         // Enable 
-                       GCLK_CLKCTRL_GEN_GCLK0 |     // Select GCLK0
-                       GCLK_CLKCTRL_ID_TCC2_TC3;    // Feed clock to TCC2 and TC3
-    while (GCLK->STATUS.bit.SYNCBUSY) {};           // Wait for synchronization
+  //   /*
+  //    * Set up TC3 for periodically calling the PID routine 
+  //    */
+  //   // Feed GCLK0 (already enabled) to TCC2 and TC3
+  //   REG_GCLK_CLKCTRL = GCLK_CLKCTRL_CLKEN |         // Enable 
+  //                      GCLK_CLKCTRL_GEN_GCLK0 |     // Select GCLK0
+  //                      GCLK_CLKCTRL_ID_TCC2_TC3;    // Feed clock to TCC2 and TC3
+  //   while (GCLK->STATUS.bit.SYNCBUSY) {};           // Wait for synchronization
   
-    // The type cast must fit with the selected timer mode (defaults to 16-bit)
-    TcCount16* TC = (TcCount16*) TC3; // get timer struct
+  //   // The type cast must fit with the selected timer mode (defaults to 16-bit)
+  //   TcCount16* TC = (TcCount16*) TC3; // get timer struct
     
-    TC->CTRLA.reg &= ~TC_CTRLA_ENABLE;    // Disable TC
-    while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync 
+  //   TC->CTRLA.reg &= ~TC_CTRLA_ENABLE;    // Disable TC
+  //   while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync 
   
-    TC->CTRLA.reg |= TC_CTRLA_MODE_COUNT16;  // Set Timer counter Mode to 16 bits (defaults to 16-bit, but why not?)
-    while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync -- UNNEEDED, according to datasheet
+  //   TC->CTRLA.reg |= TC_CTRLA_MODE_COUNT16;  // Set Timer counter Mode to 16 bits (defaults to 16-bit, but why not?)
+  //   while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync -- UNNEEDED, according to datasheet
   
-    TC->CTRLA.reg |= TC_CTRLA_WAVEGEN_MFRQ; // Set TC mode
-    while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync -- UNNEEDED, according to datasheet
+  //   TC->CTRLA.reg |= TC_CTRLA_WAVEGEN_MFRQ; // Set TC mode
+  //   while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync -- UNNEEDED, according to datasheet
     
-    TC->CTRLA.reg |= TC_CTRLA_PRESCALER_DIV256;   // Set prescaler
-    while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync -- UNNEEDED, according to datasheet
+  //   TC->CTRLA.reg |= TC_CTRLA_PRESCALER_DIV256;   // Set prescaler
+  //   while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync -- UNNEEDED, according to datasheet
   
-    //by setting TOP, we'll change the frequency to:
-    //freq = 48e6 / [(TOP + 1) * prescaler]
-    //so TOP = 48e6 / [freq * prescaler] - 1
-    uint32_t TOP = 48000000ul / (LOOP_RATE * 256) - 1;
+  //   //by setting TOP, we'll change the frequency to:
+  //   //freq = 48e6 / [(TOP + 1) * prescaler]
+  //   //so TOP = 48e6 / [freq * prescaler] - 1
+  //   uint32_t TOP = 48000000ul / (LOOP_RATE * 256) - 1;
 
-    TC->CC[0].reg = TOP; 
-    while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync
+  //   TC->CC[0].reg = TOP; 
+  //   while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync
     
-    // Interrupts
-    TC->INTENCLR.reg = 0x3B;           // clear all interrupts on this TC
-    TC->INTENSET.bit.OVF = 1;          // enable overflow interrupt
+  //   // Interrupts
+  //   TC->INTENCLR.reg = 0x3B;           // clear all interrupts on this TC
+  //   TC->INTENSET.bit.OVF = 1;          // enable overflow interrupt
    
-    // Enable InterruptVector
-    NVIC_EnableIRQ(TC3_IRQn);  //not sure what the n is for
+  //   // Enable InterruptVector
+  //   NVIC_EnableIRQ(TC3_IRQn);  //not sure what the n is for
     
-    // Enable TC
-    TC->CTRLA.reg |= TC_CTRLA_ENABLE;   //enable
-    while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync
+  //   // Enable TC
+  //   TC->CTRLA.reg |= TC_CTRLA_ENABLE;   //enable
+  //   while (TC->STATUS.bit.SYNCBUSY == 1); // wait for sync
     
-    DEBUG_SERIAL.println("/MotionController::Init");
-  }
+  //   DEBUG_SERIAL.println("/MotionController::Init");
+  // }
 
   ivector CalcMotorSpeeds(void)
   {

@@ -47,8 +47,15 @@ public:
 
   void MainLoop(void)
   {
+    if(readyToPID) 
+    {
+      DEBUG_SERIAL.println("PID");
+      ProcessPID();
+      readyToPID = 0;
+    }
+
     nh.spinOnce();
-    UGV::MainLoop();
+    //UGV::MainLoop();
   }
 
   void ProcessPID(void)

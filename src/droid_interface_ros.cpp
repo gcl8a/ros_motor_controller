@@ -3,6 +3,7 @@
  * Serves as the interface between ROS nodes on the main board and motor drivers, etc.
  */
 
+
 #include <Arduino.h>
 #include "ros_ugv.h"
 
@@ -12,10 +13,10 @@ ROSUGV robot;
 void setup()
 {
   DEBUG_SERIAL.begin(115200);
-  while(!DEBUG_SERIAL)
-  {
-    delay(100);
-  }
+  // while(!DEBUG_SERIAL)
+  // {
+  //   delay(100);
+  // }
   
   DEBUG_SERIAL.println("setup");
 
