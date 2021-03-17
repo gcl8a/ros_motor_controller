@@ -90,7 +90,18 @@ public:
       DEBUG_SERIAL.print(motorSpeeds[1]);
       DEBUG_SERIAL.print('\t');
 
-//      if(cmdMode == CMD_VEL)
+      // if(cmdMode == CMD_VEL)
+      // {
+      //   effort = controller.CalcEffort();
+      //   CommandMotors(effort);
+  
+      //   DEBUG_SERIAL.print(effort[0]);
+      //   DEBUG_SERIAL.print('\t');
+      //   DEBUG_SERIAL.print(effort[1]);
+      //   DEBUG_SERIAL.print('\n');
+      // }
+
+      // else if(cmdMode == CMD_POS)
       {
         effort = controller.CalcEffort();
         CommandMotors(effort);
@@ -98,7 +109,7 @@ public:
         DEBUG_SERIAL.print(effort[0]);
         DEBUG_SERIAL.print('\t');
         DEBUG_SERIAL.print(effort[1]);
-        DEBUG_SERIAL.print('\n');
+        DEBUG_SERIAL.print('\n');        
       }
   }
   

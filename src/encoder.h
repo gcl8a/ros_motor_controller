@@ -53,6 +53,11 @@ public:
 
     return delta;
   }
+
+  int16_t CalcPosition(void) volatile //snapTicks is guaranteed correct for the interval
+  {
+    return snapTicks;
+  }
 };
 
 extern volatile Encoder encoder1;
