@@ -18,7 +18,7 @@ protected:
   ros::NodeHandle nh;
 
   ros::Subscriber<std_msgs::UInt32> subMotorTargets;
-  ros::Publisher pubMotorSpeeds;
+  ros::Publisher pubMotorPositions;
   std_msgs::UInt32 motorDatum; //use a uint32 to pass motor speeds
 
   ros::Subscriber<std_msgs::UInt16> subCmdMode;
@@ -27,7 +27,7 @@ protected:
 
 public:
   ROSUGV(void) :  subMotorTargets("motor_targets", CmdMotorTargetCallback), //motor target is in encoder ticks per second
-                  pubMotorSpeeds("motor_speeds", &motorDatum), //motor speed is in encoder ticks per second
+                  pubMotorPositions("motor_positions", &motorDatum), //in encoder ticks
                   subCmdMode("cmd_mode", CmdModeCallback),
                   pubCmdSource("cmd_source", &cmdSource)
   {}
@@ -39,7 +39,7 @@ public:
     nh.initNode();
 
     nh.subscribe(subMotorTargets);
-    nh.advertise(pubMotorSpeeds);
+    nh.advertise(pubMotorPositions);
 
     nh.subscribe(subCmdMode);
     nh.advertise(pubCmdSource);
@@ -62,10 +62,10 @@ public:
   {
     UGV::ProcessPID();
 
-    //publish motor speeds
-    ivector motorSpeedsPerSecond = motorSpeeds * LOOP_RATE;
-    memcpy(&motorDatum.data, &motorSpeedsPerSecond[0], 4);
-    pubMotorSpeeds.publish(&motorDatum);
+    //publish motor positions
+    //ivector motorPositions = motorPositions;
+    memcpy(&motorDatum.data, &motorPositions[0], 4);
+    pubMotorPositions.publish(&motorDatum);
 
     cmdSource.data = UGV::cmdSource;
     pubCmdSource.publish(&cmdSource);
@@ -80,7 +80,7 @@ public:
       ivector targets(2);
       memcpy(&targets[0], &motor_targets.data, 4);
     
-      SetTargetMotorSpeeds(targets[0], targets[1]);
+      SetTargetPositions(targets[0], targets[1]);
     }
   }
 };

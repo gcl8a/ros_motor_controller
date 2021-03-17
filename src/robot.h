@@ -9,12 +9,14 @@
 #define __ROBOT_H
 
 #include "comm.h"
-//#include "sabertooth.h"
 #include "mc33926.h"
 #include "controller.h"
 
  /*
  * Calculation for RADIANS_PER_TICK:
+ * 
+ * NEEDS TO BE UPDATED FOR 37MM MOTOR!!!!!!!!!!!!!
+ * 
  * 7 magnets = 28 ticks / rotation
  * Gear ratio of 71:1 -> 1988 ticks / rotation 
  * or 2pi / 1988 = 0.00316 rad / tick
@@ -32,23 +34,23 @@ class UGV
 protected:
   CMD_SRC cmdSource = CMD_SRC_ROS; //start out using ROS
   
-  ivector motorSpeeds;
+  ivector motorPositions;
+  //ivector motorSpeeds;
   ivector effort;
   
   //motor driver;
   MC33926 driver;
-  MotionController controller;
+  PositionController controller;
 
 public:
-  UGV(void) : motorSpeeds(2), effort(2) 
+  UGV(void) : motorPositions(2), effort(2) 
   {}
   
   virtual void Init(void)
   {
     DEBUG_SERIAL.println("UGV::Init");
 
-    //opMode = IDLE;
-    driver.Init(COMM_PACKET_SERIAL);
+    driver.Init(COMM_PWM);
     controller.Init();
     
     DEBUG_SERIAL.println("/UGV::Init");
@@ -66,61 +68,41 @@ public:
       ProcessPID();
       readyToPID = 0;
     }
-
-    // if(imu.IsAvailableAccelAndGyro())
-    // {
-    //   imu.ProcessReadings();
-    //   String dataStr = imu.CalcRPY().MakeDataString();// + '\n';
-    //   DEBUG_SERIAL.println(dataStr);
-    // }
   }
 
   virtual void ProcessPID(void)
   {
 //    DEBUG_SERIAL.print("readyToPID");
 //    DEBUG_SERIAL.print('\n');
-      //////////!!!!!!!!!
-      motorSpeeds = controller.CalcMotorSpeeds(); //wheel velocity is ticks / period
+      
+      //motorSpeeds = controller.CalcMotorSpeeds(); //wheel velocity is ticks / period
+      motorPositions = controller.CalcMotorPositions(); //hideous, but it works
 
       DEBUG_SERIAL.print(millis());
       DEBUG_SERIAL.print('\t');
 
-      DEBUG_SERIAL.print(motorSpeeds[0]);
+      DEBUG_SERIAL.print(motorPositions[0]);
       DEBUG_SERIAL.print('\t');
-      DEBUG_SERIAL.print(motorSpeeds[1]);
+      DEBUG_SERIAL.print(motorPositions[1]);
       DEBUG_SERIAL.print('\t');
 
-      // if(cmdMode == CMD_VEL)
-      // {
-      //   effort = controller.CalcEffort();
-      //   CommandMotors(effort);
-  
-      //   DEBUG_SERIAL.print(effort[0]);
-      //   DEBUG_SERIAL.print('\t');
-      //   DEBUG_SERIAL.print(effort[1]);
-      //   DEBUG_SERIAL.print('\n');
-      // }
+      effort = controller.CalcEffort();
+      CommandMotors(effort);
 
-      // else if(cmdMode == CMD_POS)
-      {
-        effort = controller.CalcEffort();
-        CommandMotors(effort);
-  
-        DEBUG_SERIAL.print(effort[0]);
-        DEBUG_SERIAL.print('\t');
-        DEBUG_SERIAL.print(effort[1]);
-        DEBUG_SERIAL.print('\n');        
-      }
+      DEBUG_SERIAL.print(effort[0]);
+      DEBUG_SERIAL.print('\t');
+      DEBUG_SERIAL.print(effort[1]);
+      DEBUG_SERIAL.print('\n');        
   }
   
-  void SetTargetMotorSpeeds(float left, float right) //in ticks / period
+  void SetTargetPositions(int16_t left, int16_t right) //could
   {
-    //integer vector -- speeds are in integral numbers of ticks -- ignore the digitization error for now...
-    ivector speed(2); 
-    speed[0] = left;
-    speed[1] = right;
+    //integer vector -- positons are in integral numbers of ticks
+    ivector pos(2); 
+    pos[0] = left;
+    pos[1] = right;
         
-    controller.SetTarget(speed);
+    controller.SetTarget(pos);
   }
 
   ivector CommandMotors(const ivector& effort) //actuators, generically

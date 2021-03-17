@@ -14,13 +14,13 @@
 class MC33926 : public MotorDriver
 {
 protected:
-  uint8_t commMode = COMM_NONE;
+  uint8_t commMode = COMM_NONE; 
   
 public:
   MC33926(void)
   {
     //don't set pins or registers here since this gets called before standard Arduino setup
-    //use SetCommMode instead
+    //use Init instead
   }
 
   void Init(uint8_t mode)
@@ -40,7 +40,11 @@ public:
       pinMode(PWM2, OUTPUT);
     }
 
-    else commMode = COMM_NONE;
+    else 
+    {
+      commMode = COMM_NONE;
+      DEBUG_SERIAL.println("Invalide comm mode.");
+    }
     DEBUG_SERIAL.println("/MC33926::Init");
   }
 

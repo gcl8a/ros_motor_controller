@@ -96,7 +96,7 @@ public:
 
   void Init(void);
 
-  ivector CalcMotorPosition(void)
+  ivector CalcMotorPositions(void)
   {
     estimate[0] = encoder1.CalcPosition();
     estimate[1] = encoder2.CalcPosition();
