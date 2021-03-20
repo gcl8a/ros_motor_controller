@@ -52,6 +52,8 @@ public:
 
     driver.Init(COMM_PWM);
     controller.Init();
+
+    SetupEncoders();
     
     DEBUG_SERIAL.println("/UGV::Init");
   }

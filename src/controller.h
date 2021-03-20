@@ -17,8 +17,8 @@
 extern volatile uint8_t readyToPID;
 
 #define INTEGRAL_CAP 24000 //note that the comparison is sum > (INTEGRAL_CAP / Ki) so that changing Ki doesn't affect the cap
-#define KP_DEF 64
-#define KI_DEF 16
+#define KP_DEF 256
+#define KI_DEF 0
 
 #define LOOP_RATE 50 //Hz
 
