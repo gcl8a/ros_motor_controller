@@ -36,7 +36,7 @@ protected:
   
   ivector motorPositions;
   //ivector motorSpeeds;
-  ivector effort;
+  i32vector effort;
   
   //motor driver;
   MC33926 driver;
@@ -107,7 +107,7 @@ public:
     controller.SetTarget(pos);
   }
 
-  ivector CommandMotors(const ivector& effort) //actuators, generically
+  i32vector CommandMotors(const i32vector& effort) //actuators, generically
   {
     driver.SetPowers(effort[0], effort[1]);
     
