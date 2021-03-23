@@ -3,9 +3,9 @@
 
 #include "motor_driver.h"
 
-#define M1A 0
-#define M1B 1
-#define PWM1 2
+#define M1A 11
+#define M1B 12
+#define PWM1 13
 
 #define M2A 3
 #define M2B 4
