@@ -3,24 +3,24 @@
 
 #include "motor_driver.h"
 
-#define M1A 2
-#define M1B 3
-#define PWM1 4
+#define M1A 11
+#define M1B 12
+#define PWM1 13
 
-#define M2A 8
-#define M2B 7
-#define PWM2 6
+#define M2A 3
+#define M2B 4
+#define PWM2 5
 
 class MC33926 : public MotorDriver
 {
 protected:
-  uint8_t commMode = COMM_NONE;
+  uint8_t commMode = COMM_NONE; 
   
 public:
   MC33926(void)
   {
     //don't set pins or registers here since this gets called before standard Arduino setup
-    //use SetCommMode instead
+    //use Init instead
   }
 
   void Init(uint8_t mode)
@@ -40,7 +40,11 @@ public:
       pinMode(PWM2, OUTPUT);
     }
 
-    else commMode = COMM_NONE;
+    else 
+    {
+      commMode = COMM_NONE;
+      DEBUG_SERIAL.println("Invalide comm mode.");
+    }
     DEBUG_SERIAL.println("/MC33926::Init");
   }
 
