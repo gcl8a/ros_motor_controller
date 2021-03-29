@@ -25,11 +25,14 @@ protected:
   ros::Publisher pubCmdSource;
   std_msgs::UInt16 cmdSource; //use a uint16 to keep everything lined up
 
+  ros::Publisher pubAtTarget;
+  
 public:
   ROSUGV(void) :  subMotorTargets("motor_targets", CmdMotorTargetCallback), //motor target is in encoder ticks per second
                   pubMotorPositions("motor_positions", &motorDatum), //in encoder ticks
                   subCmdMode("cmd_mode", CmdModeCallback),
-                  pubCmdSource("cmd_source", &cmdSource)
+                  pubCmdSource("cmd_source", &cmdSource),
+                  pubAtTarget("at_target", &pubAtTarget)
   {}
   
   void Init(void)
