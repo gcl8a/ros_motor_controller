@@ -26,6 +26,7 @@ protected:
   std_msgs::UInt16 cmdSource; //use a uint16 to keep everything lined up
 
   ros::Publisher pubAtTarget;
+  std_msgs::Bool isAtTarget;
 
 public:
   ROSUGV(void) :  subMotorTargets("motor_targets", CmdMotorTargetCallback), //motor target is in encoder ticks per second
@@ -57,6 +58,18 @@ public:
       DEBUG_SERIAL.println("PID");
       ProcessPID();
       readyToPID = 0;
+
+      ivector error = controller.CalcError(); //2-vector
+
+      bool isDone = true;
+      if(abs(error[0]) > ________THRESHOLD) isDone = false;
+      if(abs(error[1]) > ________THRESHOLD) isDone = false;
+        
+      if(isDone)
+      {
+        isAtTarget.data = isDone;
+        pubAtTarget.publish(&isAtTarget);
+      }
     }
 
     nh.spinOnce();
