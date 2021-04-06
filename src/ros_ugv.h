@@ -62,21 +62,21 @@ public:
       ProcessPID();
       readyToPID = 0;
 
-      ivector error = controller.CalcError(); //2-vector
+      // ivector error = controller.CalcError(); //2-vector
 
-      bool isDone = true;
-      if(abs(error[0]) > ____THRESHOLD){
-        isDone = false;
-      } 
-      if(abs(error[1]) > ____THRESHOLD) {
-        isDone = false;
-      }
+      // bool isDone = true;
+      // if(abs(error[0]) > ____THRESHOLD){
+      //   isDone = false;
+      // } 
+      // if(abs(error[1]) > ____THRESHOLD) {
+      //   isDone = false;
+      // }
       
-      if(isDone)
-      {
-        isAtTarget.data = isDone;
-        pubAtTarget.publish(&isAtTarget);
-      }
+      // if(isDone)
+      // {
+      //   isAtTarget.data = isDone;
+      //   pubAtTarget.publish(&isAtTarget);
+      // }
     }
 
     nh.spinOnce();
