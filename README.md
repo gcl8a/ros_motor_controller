@@ -11,6 +11,12 @@ Install rosserial
 ensure user belongs to dialout group
 `sudo adduser $(whoami) dialout`
 
+Install prof lewin `linalg-micro` repo as library
+`https://github.com/gcl8a/linalg-micro`
+
+
+Change `&Serial` in `.pio/libdeps/sparkfun_samd21_mini_usb/Rosserial Arduino Library/src/ArduinoHardware.h` to `&SERIAL_MONITOR`
+
 ### Instructions and things
 
 Plug in board, hit reset.

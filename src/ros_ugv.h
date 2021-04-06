@@ -7,6 +7,9 @@
 
 #include <std_msgs/UInt16.h>
 #include <std_msgs/UInt32.h>
+#include <std_msgs/Bool.h>
+
+#define ____THRESHOLD 10
 
 void CmdModeCallback(const std_msgs::UInt16&);
 void CmdMotorTargetCallback(const std_msgs::UInt32&);
@@ -33,7 +36,7 @@ public:
                   pubMotorPositions("motor_positions", &motorDatum), //in encoder ticks
                   subCmdMode("cmd_mode", CmdModeCallback),
                   pubCmdSource("cmd_source", &cmdSource),
-                  pubAtTarget("at_target", &pubAtTarget)
+                  pubAtTarget("at_target", &isAtTarget)
   {}
 
   void Init(void)
@@ -62,8 +65,8 @@ public:
       ivector error = controller.CalcError(); //2-vector
 
       bool isDone = true;
-      if(abs(error[0]) > ________THRESHOLD) isDone = false;
-      if(abs(error[1]) > ________THRESHOLD) isDone = false;
+      if(abs(error[0]) > ____THRESHOLD) isDone = false;
+      if(abs(error[1]) > ____THRESHOLD) isDone = false;
         
       if(isDone)
       {
