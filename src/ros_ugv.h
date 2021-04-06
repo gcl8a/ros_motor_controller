@@ -7,7 +7,7 @@
 
 #include <std_msgs/UInt16.h>
 #include <std_msgs/UInt32.h>
-#include <std_msgs/Bool.h>
+// #include <std_msgs/Bool.h>
 
 #define ____THRESHOLD 10000
 
@@ -28,15 +28,15 @@ protected:
   ros::Publisher pubCmdSource;
   std_msgs::UInt16 cmdSource; //use a uint16 to keep everything lined up
 
-  ros::Publisher pubAtTarget;
-  std_msgs::Bool isAtTarget;
+  // ros::Publisher pubAtTarget;
+  // std_msgs::Bool isAtTarget;
 
 public:
   ROSUGV(void) :  subMotorTargets("motor_targets", CmdMotorTargetCallback), //motor target is in encoder ticks per second
                   pubMotorPositions("motor_positions", &motorDatum), //in encoder ticks
                   subCmdMode("cmd_mode", CmdModeCallback),
-                  pubCmdSource("cmd_source", &cmdSource),
-                  pubAtTarget("at_target", &isAtTarget)
+                  pubCmdSource("cmd_source", &cmdSource)
+                  // pubAtTarget("at_target", &isAtTarget)
   {}
 
   void Init(void)
@@ -51,7 +51,7 @@ public:
     nh.subscribe(subCmdMode);
     nh.advertise(pubCmdSource);
 
-    nh.advertise(pubAtTarget);
+    // nh.advertise(pubAtTarget);
   }
 
   void MainLoop(void)
