@@ -18,10 +18,10 @@
 extern volatile uint8_t readyToPID;
 
 #define INTEGRAL_CAP 128000L //note that the comparison is sum > (INTEGRAL_CAP / Ki) so that changing Ki doesn't affect the cap
-#define KP_DEF 2
+#define KP_DEF 5
 #define KI_DEF 0
 
-#define LOOP_RATE 50 //Hz
+#define LOOP_RATE 250 //Hz
 
 // class MotionController
 // { 

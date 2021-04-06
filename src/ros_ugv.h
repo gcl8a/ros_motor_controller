@@ -9,7 +9,7 @@
 #include <std_msgs/UInt32.h>
 #include <std_msgs/Bool.h>
 
-#define ____THRESHOLD 10
+#define ____THRESHOLD 10000
 
 void CmdModeCallback(const std_msgs::UInt16&);
 void CmdMotorTargetCallback(const std_msgs::UInt32&);
@@ -65,9 +65,13 @@ public:
       ivector error = controller.CalcError(); //2-vector
 
       bool isDone = true;
-      if(abs(error[0]) > ____THRESHOLD) isDone = false;
-      if(abs(error[1]) > ____THRESHOLD) isDone = false;
-        
+      if(abs(error[0]) > ____THRESHOLD){
+        isDone = false;
+      } 
+      if(abs(error[1]) > ____THRESHOLD) {
+        isDone = false;
+      }
+      
       if(isDone)
       {
         isAtTarget.data = isDone;

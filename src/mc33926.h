@@ -43,7 +43,7 @@ public:
     else 
     {
       commMode = COMM_NONE;
-      DEBUG_SERIAL.println("Invalide comm mode.");
+      DEBUG_SERIAL.println("Invalid comm mode.");
     }
     DEBUG_SERIAL.println("/MC33926::Init");
   }

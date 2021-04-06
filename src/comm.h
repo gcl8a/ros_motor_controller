@@ -1,7 +1,7 @@
 #ifndef __COMM_H
 #define __COMM_H
 
-#define USE_USBCON //comment out to use Serial1 as the ROS interface; otherwise SerialUSB
+//#define USE_USBCON //comment out to use Serial1 as the ROS interface; otherwise SerialUSB
 
 #include <Arduino.h>
 
