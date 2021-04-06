@@ -21,7 +21,7 @@ extern volatile uint8_t readyToPID;
 #define KP_DEF 724
 #define KI_DEF 0
 
-#define LOOP_RATE 50 //Hz
+#define LOOP_RATE 250 //Hz
 
 // class MotionController
 // { 
