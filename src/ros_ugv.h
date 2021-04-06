@@ -9,7 +9,7 @@
 #include <std_msgs/UInt32.h>
 // #include <std_msgs/Bool.h>
 
-#define ____THRESHOLD 10000
+// #define ____THRESHOLD 10000
 
 void CmdModeCallback(const std_msgs::UInt16&);
 void CmdMotorTargetCallback(const std_msgs::UInt32&);
