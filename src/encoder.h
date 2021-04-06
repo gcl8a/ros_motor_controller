@@ -8,10 +8,10 @@
 #include <Arduino.h>
 
 //motor:channel
-const uint8_t ENCODER_1A = 9;
-const uint8_t ENCODER_1B = 8;
-const uint8_t ENCODER_2A = 7;
-const uint8_t ENCODER_2B = 6;
+const uint8_t ENCODER_1A = A0;
+const uint8_t ENCODER_1B = A1;
+const uint8_t ENCODER_2A = A2;
+const uint8_t ENCODER_2B = A3;
 
 class Encoder
 {
