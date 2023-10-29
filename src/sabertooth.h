@@ -8,7 +8,7 @@
 #define RC_CENTER 185
 #define RC_HIGH   270
 
-#define EMERGENCY_PIN 3
+#define EMERGENCY_PIN 7
 #define ADDRESS_BYTE 128
 
 //declare a UART SERCOM for communicating through packet serial
