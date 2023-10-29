@@ -13,10 +13,10 @@ ROSUGV robot;
 void setup()
 {
   DEBUG_SERIAL.begin(115200);
-  while(!DEBUG_SERIAL)
-  {
-    delay(100);
-  }
+  // while(!DEBUG_SERIAL)
+  // {
+  //   delay(100);
+  // }
   
   DEBUG_SERIAL.println("setup");
 
