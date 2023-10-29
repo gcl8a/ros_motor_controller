@@ -122,10 +122,12 @@ public:
   {
     target = t / LOOP_RATE;
 
-//    DEBUG_SERIAL.print(target[0]);
-//    DEBUG_SERIAL.print('\t');
-//    DEBUG_SERIAL.print(target[1]);
-//    DEBUG_SERIAL.print('\n');
+#ifdef __USE_DEBUG__
+    DEBUG_SERIAL.print(target[0]);
+    DEBUG_SERIAL.print('\t');
+    DEBUG_SERIAL.print(target[1]);
+    DEBUG_SERIAL.print('\n');
+#endif
 
     return target;
   }

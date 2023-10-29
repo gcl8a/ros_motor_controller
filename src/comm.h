@@ -15,4 +15,6 @@ enum CMD_SRC : uint16_t {CMD_SRC_NONE, CMD_SRC_ROS, CMD_SRC_RADIO};
 
 bool CheckDebugSerial(void);
 
+extern String debugString;
+
 #endif

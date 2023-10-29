@@ -32,17 +32,17 @@ void loop(void)
   if(CheckDebugSerial())
   {
     //all in m/s, rad/s
-//    float left = debugString.toFloat();
-//    uint8_t comma = debugString.indexOf(',');
-//    float right = debugString.substring(comma+1).toFloat();
+    float left = debugString.toFloat();
+    uint8_t comma = debugString.indexOf(',');
+    float right = debugString.substring(comma+1).toFloat();
 
-//    DEBUG_SERIAL.print("Setting left = ");
-//    DEBUG_SERIAL.println(left);
-//    DEBUG_SERIAL.print("Setting right = ");
-//    DEBUG_SERIAL.println(right);
-//
-//    robot.SetTargetMotorSpeeds(left, right);
+    DEBUG_SERIAL.print("Setting left = ");
+    DEBUG_SERIAL.println(left);
+    DEBUG_SERIAL.print("Setting right = ");
+    DEBUG_SERIAL.println(right);
 
-//    debugString = "";
+    robot.SetTargetMotorSpeeds(left, right);
+
+    debugString = "";
   }
 }
