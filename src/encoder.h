@@ -8,10 +8,16 @@
 #include <Arduino.h>
 
 //motor:channel
-const uint8_t ENCODER_1A = 9;
-const uint8_t ENCODER_1B = 8;
-const uint8_t ENCODER_2A = 7;
-const uint8_t ENCODER_2B = 6;
+// const uint8_t ENCODER_1A = 9;
+// const uint8_t ENCODER_1B = 8;
+// const uint8_t ENCODER_2A = 7;
+// const uint8_t ENCODER_2B = 6;
+
+const uint8_t ENCODER_1A = 5;
+const uint8_t ENCODER_1B = 4;
+const uint8_t ENCODER_2A = 0;
+const uint8_t ENCODER_2B = 1;
+
 
 class Encoder
 {
@@ -32,7 +38,7 @@ public:
     int8_t del = -1;           //default for pin A
     if (pinInt == pinIntB) del = 1; //if it's pin B, reverse everything
 
-    if (digitalRead(pinIntA) == digitalRead(pinIntB)) //hard-wire to speed up
+    if (digitalRead(pinIntA) == digitalRead(pinIntB)) //need to hard-wire to speed up
     { 
       del *= -1; //turning the other way
     }

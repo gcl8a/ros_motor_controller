@@ -8,6 +8,8 @@ void MotionController::Init(void)
   DEBUG_SERIAL.println("MotionController::Init");
 #endif 
 
+  SetupEncoders();
+
   /*
     * Set up TC3 for periodically calling the PID routine 
     */
