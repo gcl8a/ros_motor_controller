@@ -78,8 +78,8 @@ public:
   {
     if(UGV::cmdSource == CMD_SRC_ROS)
     {
-      ivector targets(2);
-      memcpy(&targets[0], &motor_targets.data, 4);
+      int16_t targets[2];
+      memcpy(targets, &motor_targets.data, 4);
     
       SetTargetMotorSpeeds(targets[0], targets[1]);
     }
