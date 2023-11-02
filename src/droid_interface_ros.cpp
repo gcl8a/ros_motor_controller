@@ -3,7 +3,6 @@
  * Serves as the interface between ROS nodes on the main board and motor drivers, etc.
  */
 
-
 #include <Arduino.h>
 #include "ros_ugv.h"
 
