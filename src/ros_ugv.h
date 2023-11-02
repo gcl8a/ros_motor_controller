@@ -49,12 +49,13 @@ public:
   {
     if(readyToPID) 
     {
-      DEBUG_SERIAL.println("PID");
       ProcessPID();
       readyToPID = 0;
     }
 
     nh.spinOnce();
+
+    //really, we should call UGV to keep things separate, but taken over for now
     //UGV::MainLoop();
   }
 

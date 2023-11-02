@@ -8,12 +8,12 @@
 #define RC_CENTER 185
 #define RC_HIGH   270
 
-#define EMERGENCY_PIN 3
+#define EMERGENCY_PIN 7
 #define ADDRESS_BYTE 128
 
 //declare a UART SERCOM for communicating through packet serial
-extern Uart Serial2;// (&sercom2, 3, 2, SERCOM_RX_PAD_1, UART_TX_PAD_2);
-void SERCOM2_Handler();
+extern Uart Serial2; // on SERCOM3
+void SERCOM3_Handler();
 
 class Sabertooth : public MotorDriver
 {
@@ -41,9 +41,9 @@ public:
       Serial2.begin(9600);
   
       //Assign pin 2 SERCOM functionality -- why does this have to be after begin() -- who dropped the ball on that one?
-      pinPeripheral(2, PIO_SERCOM);
+      pinPeripheral(6, PIO_SERCOM_ALT);
 
-      //Don't mux pin 3, but pull it HIGH
+      //Don't mux pin 7, but pull it HIGH
       pinMode(EMERGENCY_PIN, INPUT_PULLUP);
     }
 

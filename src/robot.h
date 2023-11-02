@@ -9,8 +9,8 @@
 #define __ROBOT_H
 
 #include "comm.h"
-//#include "sabertooth.h"
-#include "mc33926.h"
+#include "sabertooth.h"
+//#include "mc33926.h"
 #include "controller.h"
 
  /*
@@ -36,7 +36,7 @@ protected:
   ivector effort;
   
   //motor driver;
-  MC33926 driver;
+  Sabertooth driver;
   MotionController controller;
 
 public:
@@ -80,10 +80,10 @@ public:
 //    DEBUG_SERIAL.print("readyToPID");
 //    DEBUG_SERIAL.print('\n');
       //////////!!!!!!!!!
-      motorSpeeds = controller.CalcMotorSpeeds(); //wheel velocity is ticks / period
-
       DEBUG_SERIAL.print(millis());
       DEBUG_SERIAL.print('\t');
+
+      motorSpeeds = controller.CalcMotorSpeeds(); //wheel velocity is ticks / period
 
       DEBUG_SERIAL.print(motorSpeeds[0]);
       DEBUG_SERIAL.print('\t');
