@@ -106,8 +106,8 @@ public:
   {
     //integer vector -- speeds are in integral numbers of ticks -- ignore the digitization error for now...
     ivector speed(2); 
-    speed[0] = (left / 1000. / RADIANS_PER_TICK) * LOOP_RATE;
-    speed[1] = (right / 1000. / RADIANS_PER_TICK) * LOOP_RATE;;
+    speed[0] = (left / 1000. / RADIANS_PER_TICK) * (1000 / LOOP_RATE);
+    speed[1] = (right / 1000. / RADIANS_PER_TICK) * (1000 / LOOP_RATE);
         
     controller.SetTarget(speed);
   }
