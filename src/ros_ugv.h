@@ -76,6 +76,7 @@ public:
 
   void HandleMotorTargetCommand(const std_msgs::UInt32& motor_targets)
   {
+    //motor_targets in mrad/sec for consistency
     if(UGV::cmdSource == CMD_SRC_ROS)
     {
       int16_t targets[2];

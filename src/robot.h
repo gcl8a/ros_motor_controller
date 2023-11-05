@@ -21,7 +21,7 @@
  * 
  */
 
-//#define RADIANS_PER_TICK (0.00316)
+#define RADIANS_PER_TICK (0.00316)
 //#define RADIUS_WHEEL (0.081)
 //const uint16_t TICKS_PER_METER = 3906;
 //const float ROBOT_RADIUS = 0.227;
@@ -102,11 +102,11 @@ public:
       }
   }
   
-  void SetTargetMotorSpeeds(float left, float right) //in ticks / period
+  void SetTargetMotorSpeeds(float left, float right) //in mrad/sec
   {
     //integer vector -- speeds are in integral numbers of ticks -- ignore the digitization error for now...
     ivector speed(2); 
-    speed[0] = left;
+    speed[0] = (left / 1000. / RADIANS_PER_TICK) * LOOP_RATE;
     speed[1] = right;
         
     controller.SetTarget(speed);
