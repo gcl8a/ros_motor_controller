@@ -27,7 +27,7 @@ protected:
 
 public:
   ROSUGV(void) :  subMotorTargets("motor_targets", CmdMotorTargetCallback), //motor target is in encoder ticks per second
-                  pubMotorSpeeds("motor_speeds", &motorDatum), //motor speed is in encoder ticks per second
+                  pubMotorSpeeds("motor_speeds", &motorDatum), //motor speed is in mrad per second
                   subCmdMode("cmd_mode", CmdModeCallback),
                   pubCmdSource("cmd_source", &cmdSource)
   {}
@@ -64,8 +64,11 @@ public:
     UGV::ProcessPID();
 
     //publish motor speeds
-    ivector mRadPerSec = motorSpeeds * LOOP_RATE * RADIANS_PER_TICK * 1000;
-    memcpy(&motorDatum.data, &mRadPerSec[0], 4);
+    ivector mRadPerSec = motorSpeeds * (LOOP_RATE * RADIANS_PER_TICK * 1000);
+    uint32_t datum;
+    memcpy(&datum, &mRadPerSec[0], 4);
+    motorDatum.data = datum;
+
     pubMotorSpeeds.publish(&motorDatum);
 
     cmdSource.data = UGV::cmdSource;
