@@ -118,9 +118,9 @@ public:
     return effort;
   }
 
-  ivector SetTarget(const ivector& t) //in ticks / second
+  ivector SetTarget(const ivector& t) //in ticks / interval
   {
-    target = t / LOOP_RATE;
+    target = t;
 
 #ifdef __USE_DEBUG__
     DEBUG_SERIAL.print(target[0]);

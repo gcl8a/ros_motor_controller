@@ -64,8 +64,8 @@ public:
     UGV::ProcessPID();
 
     //publish motor speeds
-    ivector motorSpeedsPerSecond = motorSpeeds * LOOP_RATE;
-    memcpy(&motorDatum.data, &motorSpeedsPerSecond[0], 4);
+    ivector mRadPerSec = motorSpeeds * LOOP_RATE * RADIANS_PER_TICK * 1000;
+    memcpy(&motorDatum.data, &mRadPerSec[0], 4);
     pubMotorSpeeds.publish(&motorDatum);
 
     cmdSource.data = UGV::cmdSource;
