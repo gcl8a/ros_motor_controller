@@ -32,7 +32,7 @@ class UGV
 protected:
   CMD_SRC cmdSource = CMD_SRC_ROS; //start out using ROS
   
-  ivector motorSpeeds;
+  ivector motorSpeeds; //ticks per interval
   ivector effort;
   
   //motor driver;
@@ -106,8 +106,8 @@ public:
   {
     //integer vector -- speeds are in integral numbers of ticks -- ignore the digitization error for now...
     ivector speed(2); 
-    speed[0] = (left / 1000. / RADIANS_PER_TICK) * (1000 / LOOP_RATE);
-    speed[1] = (right / 1000. / RADIANS_PER_TICK) * (1000 / LOOP_RATE);
+    speed[0] = (left / 1000. / RADIANS_PER_TICK);
+    speed[1] = (right / 1000. / RADIANS_PER_TICK);
         
     controller.SetTarget(speed);
   }
