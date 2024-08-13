@@ -26,10 +26,11 @@ protected:
   std_msgs::UInt16 cmdSource; //use a uint16 to keep everything lined up
 
 public:
-  ROSUGV(void) :  subMotorTargets("motor_targets", CmdMotorTargetCallback), //motor target is in encoder ticks per second
-                  pubMotorSpeeds("motor_speeds", &motorDatum), //motor speed is in mrad per second
-                  subCmdMode("cmd_mode", CmdModeCallback),
-                  pubCmdSource("cmd_source", &cmdSource)
+  ROSUGV(void) :  
+      subMotorTargets("motor_targets", CmdMotorTargetCallback), //motor target is in encoder ticks per second
+      pubMotorSpeeds("motor_speeds", &motorDatum), //motor speed is in mrad per second
+      subCmdMode("cmd_mode", CmdModeCallback),
+      pubCmdSource("cmd_source", &cmdSource)
   {}
   
   void Init(void)
@@ -47,16 +48,9 @@ public:
 
   void MainLoop(void)
   {
-    if(readyToPID) 
-    {
-      ProcessPID();
-      readyToPID = 0;
-    }
+    UGV::MainLoop();
 
     nh.spinOnce();
-
-    //really, we should call UGV to keep things separate, but taken over for now
-    //UGV::MainLoop();
   }
 
   void ProcessPID(void)
