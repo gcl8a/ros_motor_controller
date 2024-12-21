@@ -100,12 +100,14 @@ public:
         DEBUG_SERIAL.print(effort[1]);
         DEBUG_SERIAL.print('\n');
       }
+
+
   }
   
   void SetTargetMotorSpeeds(float left, float right) //in mrad/sec
   {
     //integer vector -- speeds are in integral numbers of ticks -- ignore the digitization error for now...
-    ivector speed(2); 
+    TVector<float> speed(2); 
     speed[0] = left / (1000. * RADIANS_PER_TICK * LOOP_RATE);
     speed[1] = right / (1000. * RADIANS_PER_TICK * LOOP_RATE);
         

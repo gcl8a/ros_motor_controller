@@ -25,8 +25,8 @@ extern volatile uint8_t readyToPID;
 class MotionController
 { 
 protected: 
-  ivector target;   //target speed, using integer math to speed up the processing
-  ivector estimate; //wheel speed estimate
+  TVector<float> target;   //target speed, using integer math to speed up the processing
+  TVector<float> estimate; //wheel speed estimate
 
   uint16_t Kp = KP_DEF;
   uint16_t Ki = KI_DEF;
@@ -93,8 +93,16 @@ public:
     return estimate;
   }
 
-  ivector CalcError(void)
+  TVector<float> CalcError(void)
   {
+
+#ifdef __USE_DEBUG__
+    DEBUG_SERIAL.print(target[0]);
+    DEBUG_SERIAL.print('\t');
+    DEBUG_SERIAL.print(target[1]);
+    DEBUG_SERIAL.print('\t');
+#endif
+
     return target - estimate;
   }
 
@@ -118,17 +126,9 @@ public:
     return effort;
   }
 
-  ivector SetTarget(const ivector& t) //in ticks / interval
+  TVector<float> SetTarget(const TVector<float>& t) //in ticks / interval
   {
     target = t;
-
-#ifdef __USE_DEBUG__
-    DEBUG_SERIAL.print(target[0]);
-    DEBUG_SERIAL.print('\t');
-    DEBUG_SERIAL.print(target[1]);
-    DEBUG_SERIAL.print('\n');
-#endif
-
     return target;
   }
 };
